@@ -20,22 +20,24 @@ import { Snackbar } from "@mui/material";
 const defaultTheme = createTheme();
 
 export default function Authentication() {
-  const [username, setUsername] = React.useState();
-  const [password, setPassword] = React.useState();
-  const [name, setName] = React.useState();
-  const [error, setError] = React.useState();
-  const [message, setMessage] = React.useState();
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [name, setName] = React.useState("");
+  const [error, setError] = React.useState("");
+  const [message, setMessage] = React.useState("");
 
   const [formState, setFormState] = React.useState(0);
 
   const [open, setOpen] = React.useState(false);
 
   const { handleRegister, handleLogin } = React.useContext(AuthContext);
+  
 
   let handleAuth = async () => {
     try {
       if (formState === 0) {
         let result = await handleLogin(username, password);
+        
       }
       if (formState === 1) {
         let result = await handleRegister(name, username, password);
@@ -49,7 +51,7 @@ export default function Authentication() {
       }
     } catch (err) {
       console.log(err);
-      let message = err.response.data.message;
+      let message = err.response?.data?.message || "An error occurred. Please try again.";
       setError(message);
     }
   };

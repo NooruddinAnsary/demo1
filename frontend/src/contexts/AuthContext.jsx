@@ -11,6 +11,7 @@ const client = axios.create({
 
 export const AuthProvider = ({children}) =>{
     const authContext = useContext(AuthContext)
+    
 
     const [userData, setUserData] = useState(authContext);
 
@@ -33,19 +34,20 @@ export const AuthProvider = ({children}) =>{
       }
     }
 
-    const handaleLogin  = async (username, password) =>{
+    const handleLogin = async (username, password) => {
       try {
-        let request = await client.post("/login", {
-          username: username,
-          password: password
-        })
-        console.log(username, password);
-        console.log(request.data)
+          let request = await client.post("/login", {
+              username: username,
+              password: password
+          });
 
-        if (request.status === httpStatus.OK) {
-          localStorage.setItem("token", request.data.token);
-          router("/home")
-      }
+          console.log(username, password)
+          console.log(request.data)
+
+          if (request.status === httpStatus.OK) {
+              localStorage.setItem("token", request.data.token);
+              // router("/home")
+          }
       } catch (err) {
         throw err;
       }
@@ -54,7 +56,7 @@ export const AuthProvider = ({children}) =>{
   
 
     const data = {
-      userData, setUserData, handleRegister, handaleLogin
+      userData, setUserData, handleRegister, handleLogin
     }
     return (
       <AuthContext.Provider value={data}>
